@@ -1,3 +1,5 @@
+# app.py
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -8,16 +10,11 @@ import os
 
 warnings.filterwarnings("ignore")
 
-#  Check if model and scaler exist
-if not os.path.exists("model.pkl"):
-    st.error(" 'model.pkl' not found. Please make sure it's in the root directory.")
+# --- Load model and scaler safely ---
+if not os.path.exists("model.pkl") or not os.path.exists("scaler.pkl"):
+    st.error(" Required files not found. Please ensure 'model.pkl' and 'scaler.pkl' are in the app directory.")
     st.stop()
 
-if not os.path.exists("scaler.pkl"):
-    st.error(" 'scaler.pkl' not found. Please make sure it's in the root directory.")
-    st.stop()
-
-#  Load model and scaler
 model = joblib.load("model.pkl")
 scaler = joblib.load("scaler.pkl")
 
@@ -67,7 +64,11 @@ with st.sidebar:
         st.info("This AI-powered web app helps in the early detection of breast cancer using machine learning. Built with Python, Scikit-learn, and Streamlit.")
 
     st.markdown("---")
-    st.subheader(" Developer Portfolio")
+    st.subheader("Developer Portfolio")
+
+    # Optional profile picture
+    # image = Image.open("your_photo.jpg")
+    # st.image(image, width=150, caption="Naima Khan")
 
     st.markdown("""
     **Naima Khan**  
@@ -85,7 +86,7 @@ with st.sidebar:
     - [Customer Churn Prediction](#)  
     """)
 
-    st.markdown(" **Connect with me:**")
+    st.markdown("**Connect with me:**")
     col1, col2 = st.columns(2)
     with col1:
         st.link_button("GitHub", "https://github.com/naima-khan")
